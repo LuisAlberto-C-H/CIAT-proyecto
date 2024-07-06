@@ -34,20 +34,27 @@
             </thead>
 
             <tbody>
-                {{-- @foreach ($clientes as $cliente)
+                @foreach ($solicitudes_analisis as $solicitud)
                     <tr>
-                        <td>{{ $cliente->id }}</td>
-                        <td>{{ $cliente->persona->nombre }} {{ $cliente->persona->apellido }}</td>
+                        <td>{{ $solicitud->id }}</td>
+                        <td>{{ $solicitud->cliente_id}}</td>
+                        <td>{{ $solicitud->gestion_id }}</td>
+                        <td>{{ $solicitud->glosario }}</td>
+                        <td>{{ $solicitud->fecha_muestreo }}</td>
+                        <td>{{ $solicitud->cultivo_anterior }}</td>
+                        <td>{{ $solicitud->cultivo_actual }}</td>
+                        <td>{{ $solicitud->lugar_muestreo }}</td>
+                        {{-- <td>{{ $cliente->persona->nombre }} {{ $cliente->persona->apellido }}</td>
                         <td>{{ optional($cliente->propiedad)->nombre ?? 'Sin/ Propiedad' }}</td>
                         <td>{{ $cliente->institucion ?? 'Sin/Institución' }}</td>
-                        <td>{{ $cliente->nit }}</td>
+                        <td>{{ $cliente->nit }}</td> --}}
 
                         <td width="25px;">
-                            <a class="btn btn-sm btn-primary" href="{{ route('admin.cliente.edit', $cliente) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="btn btn-sm btn-primary" href="{{ route('admin.cliente.edit', $solicitud) }}"><i class="fas fa-pencil-alt"></i></a>
                         </td>
 
                         <td width="25px;">
-                            <form action="{{ route('admin.cliente.destroy', $cliente) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                            <form action="{{ route('admin.cliente.destroy', $solicitud) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                                 @csrf
                                 @method('DELETE')
 
@@ -56,7 +63,7 @@
                         </td>
                         
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>

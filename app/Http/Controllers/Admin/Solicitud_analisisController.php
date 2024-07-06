@@ -17,7 +17,8 @@ class Solicitud_analisisController extends Controller
      */
     public function index()
     {   
-        return view('admin.solicitud_analisis.index');
+        $solicitudes_analisis = Solicitud_analisis::all();
+        return view('admin.solicitud_analisis.index', compact('solicitudes_analisis'));
     }
 
     /**
