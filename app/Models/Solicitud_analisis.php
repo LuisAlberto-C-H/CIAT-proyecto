@@ -22,4 +22,7 @@ class Solicitud_analisis extends Model
         return $this->belongsTo(Cliente::class);
     }
 
+    public function gestion(){
+        return $this->belongsTo(Gestion::class);
+    }
 }

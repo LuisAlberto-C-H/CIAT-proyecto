@@ -12,6 +12,8 @@ class Gestion extends Model
     protected $table = 'gestion';
     protected $fillable = ['nombre'];
 
-
+    public function solicitud_analisis(){
+        return $this->hasMany(Solicitud_analisis::class);
+    }
 
 }

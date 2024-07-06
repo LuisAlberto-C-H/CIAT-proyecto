@@ -17,7 +17,9 @@ class Solicitud_analisisController extends Controller
      */
     public function index()
     {   
-        $solicitudes_analisis = Solicitud_analisis::all();
+        // $solicitudes_analisis = Solicitud_analisis::all();
+        // $solicitudes_analisis = Solicitud_analisis::orderBy('id', 'desc')->get();
+        $solicitudes_analisis = Solicitud_analisis::where('estado', 1)->orderBy('id', 'desc')->get();
         return view('admin.solicitud_analisis.index', compact('solicitudes_analisis'));
     }
 
@@ -56,7 +58,20 @@ class Solicitud_analisisController extends Controller
             
         ]);
         
-        $datos = $request->only([
+        // $datos = $request->only([
+        //     'cliente_id',
+        //     'gestion_id',
+        //     'glosario',
+        //     'fecha_muestreo',
+        //     'cultivo_anterior',
+        //     'cultivo_actual',
+        //     'lugar_muestreo'
+        // ]);
+
+        // Solicitud_analisis::create($datos);
+
+        // Crear el nuevo registro y obtener el ID
+        $solicitud = Solicitud_analisis::create($request->only([
             'cliente_id',
             'gestion_id',
             'glosario',
@@ -64,11 +79,9 @@ class Solicitud_analisisController extends Controller
             'cultivo_anterior',
             'cultivo_actual',
             'lugar_muestreo'
-        ]);
-
-        Solicitud_analisis::create($datos);
+        ]));
         // return view('admin.solicitud_analisis.index')->with('message', 'La Solicitud de análisis fue creado con éxito...');
-        return redirect()->route('admin.solicitud_analisis.index')->with('message', 'La solicitud de análisis ha sido creada exitosamente.');
+        return redirect()->route('admin.solicitud_analisis.edit', $solicitud->id)->with('message', 'La solicitud de Análisis fue creado exitosamente.');
     }
 
     /**
@@ -89,8 +102,13 @@ class Solicitud_analisisController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $gestiones = Gestion::where('estado', 1)->get();
+        // return view('admin.solicitud_analisis.edit', compact('solicitud','gestiones'));
+
+        $solicitud = Solicitud_analisis::findOrFail($id);
+        
+        return view('admin.solicitud_analisis.edit', compact('solicitud','gestiones'));
     }
 
     /**
@@ -102,7 +120,36 @@ class Solicitud_analisisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([  
+            'cliente_id' => 'required',
+            'gestion_id' => 'required',
+            'glosario' => 'required',
+            'fecha_muestreo' => 'required',
+            'cultivo_anterior' => 'required',
+            'cultivo_actual' => 'required',
+            'lugar_muestreo' => 'required',
+        ]
+        , [
+            'cliente_id.required' => 'El campo Nombre_del_cliente es obligatorio.',
+            'gestion_id.required' => 'El campo Gestión es obligatorio.',
+            'glosario.required' => 'El campo Descripción es obligatorio.',
+            
+        ]);
+        // $cliente = Cliente::findOrFail($id);
+        // $cliente->update($validar);
+            
+        $solicitud = Solicitud_analisis::findOrFail($id);
+        $datos = $request->only([
+            'cliente_id',
+            'gestion_id',
+            'glosario',
+            'fecha_muestreo',
+            'cultivo_anterior',
+            'cultivo_actual',
+            'lugar_muestreo']);
+
+        $solicitud->update($datos);
+        return redirect()->route('admin.solicitud_analisis.edit', $solicitud->id)->with('message', 'La Solicitud de Análisis fue actualizado exitosamente.');
     }
 
     /**
@@ -113,7 +160,12 @@ class Solicitud_analisisController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $solicitud = Solicitud_analisis::findOrFail($id);
+        $solicitud->estado = 0; // Cambiar el estado a "eliminado"
+        $solicitud->save();
+    
+        return redirect()->route('admin.solicitud_analisis.index')
+                        ->with('message', 'La Solicitud de Análisis fue eliminado correctamente.');
     }
 
     public function buscarCliente(Request $request)

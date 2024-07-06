@@ -37,8 +37,8 @@
                 @foreach ($solicitudes_analisis as $solicitud)
                     <tr>
                         <td>{{ $solicitud->id }}</td>
-                        <td>{{ $solicitud->cliente_id}}</td>
-                        <td>{{ $solicitud->gestion_id }}</td>
+                        <td>{{ $solicitud->cliente->persona->nombre}} {{ $solicitud->cliente->persona->apellido}}</td>
+                        <td>{{ $solicitud->gestion->nombre }}</td>
                         <td>{{ $solicitud->glosario }}</td>
                         <td>{{ $solicitud->fecha_muestreo }}</td>
                         <td>{{ $solicitud->cultivo_anterior }}</td>
@@ -50,11 +50,11 @@
                         <td>{{ $cliente->nit }}</td> --}}
 
                         <td width="25px;">
-                            <a class="btn btn-sm btn-primary" href="{{ route('admin.cliente.edit', $solicitud) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="btn btn-sm btn-primary" href="{{ route('admin.solicitud_analisis.edit', $solicitud) }}"><i class="fas fa-pencil-alt"></i></a>
                         </td>
 
                         <td width="25px;">
-                            <form action="{{ route('admin.cliente.destroy', $solicitud) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                            <form action="{{ route('admin.solicitud_analisis.destroy', $solicitud) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                                 @csrf
                                 @method('DELETE')
 
@@ -76,20 +76,19 @@
     {{-- --------TOAST.MIN.CSS--------}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    @stop
+@stop
     
-    @section('js')
+@section('js')
     @parent
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     {{-- ------TOAST.JS------- --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
     @if(session()->has('message'))
-        <script>
-            $(document).ready(function() {
-                toastr.success("{{ session('message') }}");
-            });
-        </script>
+    <script>
+        $(document).ready(function() {
+            toastr.success("{{ session('message') }}");
+        });
+    </script>
     @endif
 @stop
