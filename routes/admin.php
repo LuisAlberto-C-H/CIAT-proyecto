@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticuloController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\HomeController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\PaisController;
 use App\Http\Controllers\Admin\PropiedadController;
 use App\Http\Controllers\Admin\ProvinciaController;
 use App\Http\Controllers\Admin\Solicitud_analisisController;
+use App\Http\Controllers\Admin\Tipo_analisisController;
 
 // Route::get('', function () {
 //     return "Hola a todos adminis";
@@ -33,5 +35,6 @@ Route::get('/buscar-personas', [PersonaController::class, 'buscar']);
 Route::resource('gestiones', GestionController::class)->names('admin.gestion');
 Route::resource('solicitud_analisis', Solicitud_analisisController::class)->names('admin.solicitud_analisis');
 
-// Route::get('/buscar-clientes', [Solicitud_analisisController::class, 'buscar'])->name('buscar.clientes');
 Route::get('/buscar-cliente', [Solicitud_analisisController::class, 'buscarCliente'])->name('buscar.clientes');
+Route::resource('tipo_analisis', Tipo_analisisController::class)->names('admin.tipo_analisis');
+Route::resource('articulos', ArticuloController::class)->names('admin.articulo');

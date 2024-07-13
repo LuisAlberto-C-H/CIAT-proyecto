@@ -383,6 +383,18 @@ return [
             'icon' => 'fas fa-fw fa-file-alt',
             'active' => ['admin/solicitud_analisis*'],
         ],
+        [
+            'text' => 'Tipo de Análisis',
+            'route' => 'admin.tipo_analisis.index',
+            'icon' => 'fas fa-fw fas fas fa-flask',
+            'active' => ['admin/tipo_analisis*'],
+        ],
+        [
+            'text' => 'Artículo',
+            'route' => 'admin.articulo.index',
+            'icon' => 'fas fa-fw fas fa-tag',
+            'active' => ['admin/articulo*'],
+        ],
         // [
         //     'text' => 'profile',
         //     'url' => 'admin/settings',
